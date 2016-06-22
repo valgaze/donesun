@@ -2,4 +2,7 @@
     <string name="app_name">DoneSun</string>
     <string name="todo_input_hint">Too doo</string>
     <string name="add">Add</string>
+    <string name="todo_added_error">Please add some text</string>
+    <string name="todo_added_success">Successfully Added!</string>
+
 </resources>
