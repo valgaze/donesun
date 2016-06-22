@@ -9,6 +9,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,16 +35,36 @@ public class MainActivity extends AppCompatActivity {
 //                toastMaker(Integer.toString(position));
                 items.remove(position);
                 itemsAdapter.notifyDataSetChanged();
+                writeItems();
                 return true;
             }
         });
     }
 
+    private void readItems() {
+        File filesDir = getFilesDir();
+        File file = new File(filesDir, "todo.txt");
+        try {
+            items = new ArrayList<String>(FileUtils.readLines(file));
+        } catch(IOException e) {
+
+            items = new ArrayList<String>();
+        }
+    }
+
+    private void writeItems() {
+        File filesDir = getFilesDir();
+        File file = new File(filesDir, "todo.txt");
+        try {
+            FileUtils.writeLines(file, items);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void populateArrayItems() {
-        items = new ArrayList<String>();
-        items.add("Task1");
-        items.add("Task2");
-        items.add("Task3");
+        readItems();
         itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
     }
 
@@ -53,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             String successMsg = todoText + " " + getString(R.string.todo_added_success);
 
             itemsAdapter.add(todoText); //Note add to adapter not the list!
+            writeItems();
             toastMaker(todoText);
         }
     }
