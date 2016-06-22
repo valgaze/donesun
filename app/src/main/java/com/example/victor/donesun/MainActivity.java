@@ -28,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-                toastMaker(Integer.toString(position));
+//                toastMaker(Integer.toString(position));
+                items.remove(position);
+                itemsAdapter.notifyDataSetChanged();
                 return true;
             }
         });
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public void addItem(View view) {
         String todoText = etEditText.getText().toString();
         if (todoText.length() == 0) {
-            toastMaker(R.string.todo_added_error);
+            toastMaker(getString(R.string.todo_added_error));
         } else {
             etEditText.setText("");
             String successMsg = todoText + " " + getString(R.string.todo_added_success);
