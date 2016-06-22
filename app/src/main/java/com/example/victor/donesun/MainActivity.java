@@ -3,6 +3,7 @@ package com.example.victor.donesun;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,7 +25,13 @@ public class MainActivity extends AppCompatActivity {
         lvItems = (ListView) findViewById(R.id.lvItems); //This ID is specified in XML
         lvItems.setAdapter(itemsAdapter);
         etEditText = (EditText) findViewById(R.id.etEditText); //We're casting findViewById, which returns a VIEW, into an EditText
-
+        lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                toastMaker(Integer.toString(position));
+                return true;
+            }
+        });
     }
 
     public void populateArrayItems() {
@@ -38,13 +45,17 @@ public class MainActivity extends AppCompatActivity {
     public void addItem(View view) {
         String todoText = etEditText.getText().toString();
         if (todoText.length() == 0) {
-            Toast.makeText(this, getString(R.string.todo_added_error), Toast.LENGTH_SHORT).show();
+            toastMaker(R.string.todo_added_error);
         } else {
             etEditText.setText("");
             String successMsg = todoText + " " + getString(R.string.todo_added_success);
 
             itemsAdapter.add(todoText); //Note add to adapter not the list!
-            Toast.makeText(this, successMsg, Toast.LENGTH_SHORT).show();
+            toastMaker(todoText);
         }
+    }
+
+    public void toastMaker(String param) {
+        Toast.makeText(this, param, Toast.LENGTH_SHORT).show();
     }
 }
