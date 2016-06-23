@@ -36,10 +36,12 @@ public class MainActivity extends AppCompatActivity {
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                toastMaker(Integer.toString(position));
+                String finishedTodo = items.get(position);
+                String successMsg = "\"" + finishedTodo + "\" " + getString(R.string.todo_killed_success);
                 items.remove(position);
                 itemsAdapter.notifyDataSetChanged();
                 writeItems();
+                toastMaker(successMsg);
                 return true;
             }
         });
@@ -59,15 +61,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == INTENT_CODE) {
             TodoObj payload = (TodoObj) data.getSerializableExtra("payload"); //Again, cast it!!
-
+            String originalTodo = items.get(payload.getPosition());
+            String newTodo = payload.getContent();
             //Overwrite correct element
-            items.set(payload.getPosition(), payload.getContent());
+            items.set(payload.getPosition(), newTodo);
             //Notify the adapter!
             itemsAdapter.notifyDataSetChanged();
             //Persist the data
             writeItems();
-            //Celebrate
-            toastMaker(payload.getContent());
+
+            if (!originalTodo.equals(newTodo)) {
+                String successMsg = "\"" + newTodo + "\" " + getString(R.string.todo_edited_success);
+                toastMaker(successMsg);
+            }
+
         }
     }
 
@@ -110,11 +117,8 @@ public class MainActivity extends AppCompatActivity {
             toastMaker(getString(R.string.todo_added_error));
         } else {
             etEditText.setText("");
-            String successMsg = todoText + " " + getString(R.string.todo_added_success);
-
             itemsAdapter.add(todoText); //Note add to adapter not the list!
             writeItems();
-            toastMaker(todoText);
         }
     }
 

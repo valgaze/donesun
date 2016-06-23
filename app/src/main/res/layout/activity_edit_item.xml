@@ -16,8 +16,7 @@
         android:id="@+id/edit_save"
         android:onClick="saveEdits"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/mlEditText"
-        android:layout_alignEnd="@+id/mlEditText" />
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -25,16 +24,8 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/mlEditText"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="121dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_cancel"
-        android:id="@+id/edit_cancel"
-        android:onClick="abortEdit"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/mlEditText"
-        android:layout_alignStart="@+id/mlEditText" />
 </RelativeLayout>

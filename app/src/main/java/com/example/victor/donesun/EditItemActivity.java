@@ -32,10 +32,6 @@ public class EditItemActivity extends AppCompatActivity {
         returnBack();
     }
 
-    public void abortEdit (View view) {
-        returnBack();
-    }
-
     public void returnBack() {
         Intent payload = new Intent();
         String editedTodo = mlEditText.getText().toString();
