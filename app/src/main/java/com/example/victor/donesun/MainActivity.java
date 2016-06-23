@@ -1,5 +1,6 @@
 package com.example.victor.donesun;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -45,9 +46,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 toastMaker("Click listener!");
+                launchComposeView();
             }
         });
 
+    }
+
+    public void launchComposeView() {
+        // first parameter is the context, second is the class of the activity to launch
+        Intent i = new Intent(MainActivity.this, EditItemActivity.class);
+        startActivity(i); // brings up the second activity
     }
 
     private void readItems() {
