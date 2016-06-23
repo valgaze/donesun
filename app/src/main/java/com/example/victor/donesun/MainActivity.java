@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> itemsAdapter;
     ListView lvItems;
     EditText etEditText;
+    EditText mlEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                toastMaker("Click listener!");
+            }
+        });
+
     }
 
     private void readItems() {
@@ -81,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             toastMaker(todoText);
         }
     }
+
 
     public void toastMaker(String param) {
         Toast.makeText(this, param, Toast.LENGTH_SHORT).show();

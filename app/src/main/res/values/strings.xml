@@ -4,5 +4,6 @@
     <string name="add">Add</string>
     <string name="todo_added_error">Please add some text</string>
     <string name="todo_added_success">Successfully Added!</string>
+    <string name="edit_save">Save</string>
 
 </resources>
