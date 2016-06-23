@@ -46,9 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                toastMaker("Click listener!");
-                launchComposeView();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String todoContent = items.get(position);
+                TodoObj todopayload = new TodoObj(position, todoContent);
+                launchComposeView(todopayload);
             }
         });
 
@@ -57,15 +58,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == INTENT_CODE) {
-            String str = data.getExtras().getString("foo");
-            toastMaker(str);
+            TodoObj payload = (TodoObj) data.getSerializableExtra("payload"); //Again, cast it!!
+
+            //Overwrite correct element
+            items.set(payload.getPosition(), payload.getContent());
+            //Notify the adapter!
+            itemsAdapter.notifyDataSetChanged();
+            //Persist the data
+            writeItems();
+            //Celebrate
+            toastMaker(payload.getContent());
         }
     }
 
-    public void launchComposeView() {
-        // first parameter is the context, second is the class of the activity to launch
+    public void launchComposeView(TodoObj todoinstance) {
         Intent i = new Intent(MainActivity.this, EditItemActivity.class);
-        i.putExtra("foo","barrrrr  you going to the mall later?");
+        i.putExtra("payload", todoinstance);
         startActivityForResult(i, INTENT_CODE); // brings up the second activity
     }
 
